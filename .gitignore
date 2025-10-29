@@ -1,0 +1,17 @@
+﻿# Python cache & artifacts
+__pycache__/
+*.pyc
+
+# Virtual environment & env vars
+.venv/
+.env
+
+# Data folders (shared separately)
+input/
+output/
+
+# Editors/OS cruft
+.vscode/
+.idea/
+.DS_Store
+.ipynb_checkpoints/

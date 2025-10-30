@@ -53,7 +53,7 @@ TENDER_VARIATION_MAP = {
 }
 
 # ----- Default operational parameters -----
-DEFAULT_PEAK_HRS = [9, 10, 11, 12]  # hours (default if frontend doesn’t send)
+DEFAULT_PEAK_HRS = [6, 8, 16, 18]  # hours (default if frontend doesn’t send)
 
 
 # ---------------------------------------------------------

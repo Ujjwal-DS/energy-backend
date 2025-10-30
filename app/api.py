@@ -231,6 +231,23 @@ def _apply_overrides_with_mapping(df_ass, df_opt, df_capex, payload, df_map):
             elif "capex" in df_capex.columns and (df_capex["capex"] == key).any():
                 df_capex.loc[df_capex["capex"] == key, "value"] = vv
                 log(f"[DIRECT→CAPEX] {key} = {vv}")
+                
+    # ---- Stage 2.5: Direct CAPEX nested override ----
+    capex_payload = payload.get("capex", {})
+    if isinstance(capex_payload, dict):
+        for group_name, items in capex_payload.items():  # e.g. "Solar", "Wind", ...
+            if not isinstance(items, list):
+                continue
+            for row in items:
+                label = str(row.get("label", "")).strip()
+                value = coerce_number(row.get("value"))
+                if not label or value is None:
+                    continue
+                # Match against df_capex['capex'] values
+                if "capex" in df_capex.columns and (df_capex["capex"] == label).any():
+                    df_capex.loc[df_capex["capex"] == label, "value"] = value
+                    log(f"[DIRECT→CAPEX:NESTED] {group_name} → {label} = {value}")
+
 
     return df_ass, df_opt, df_capex
 

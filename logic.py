@@ -8,17 +8,19 @@ import pandas as pd
 from datetime import datetime
 from pyxirr import xirr
 from helpers import get_val, normalize_columns, log
+from app.config import DEFAULT_PEAK_HRS
 
 # ============================================================
 #  Function: generate_main_dataframe
 # ============================================================
-def generate_main_dataframe(df_load_profile: pd.DataFrame, df_assumptions: pd.DataFrame) -> pd.DataFrame:
+def generate_main_dataframe(df_load_profile: pd.DataFrame, df_assumptions: pd.DataFrame, peak_hrs: list = None) -> pd.DataFrame:
 
     """Generate GH2 master table (solar + wind + BESS logic)."""
     
 
-    peak_hrs = get_val(df_assumptions, "peak_hrs", single=False)
-    log(f"peak_hrs: {peak_hrs}")
+    if not peak_hrs:
+        peak_hrs = DEFAULT_PEAK_HRS
+    log(f"[MAIN] Using peak_hrs = {peak_hrs}")
 
     # Other assumption parameters
     solar_capacity       = get_val(df_assumptions, "solar_capacity")
